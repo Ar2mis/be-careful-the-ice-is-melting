@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Be careful! The ice is melting!</title>
+<meta name="description" content="Guide a melting ice cube into the freezer.">
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07151f;color:#e6f5f6;font-family:system-ui,sans-serif}canvas{display:block;width:100%;height:100%;outline:none}#loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#07151f;z-index:2;text-align:center;padding:24px;box-sizing:border-box}.cube{width:56px;height:56px;border:1px solid #d4fcff;background:linear-gradient(145deg,#c5f7ff,#4caacb);border-radius:14px;box-shadow:0 0 60px #51b4c32a;transform:rotate(-12deg);margin:0 auto 28px}h1{font-size:24px;letter-spacing:.12em;margin:0 0 14px}p{font-size:16px;color:#91abb8;line-height:1.8}.track{height:3px;width:min(280px,70vw);background:#1f3946;margin:28px auto;border-radius:4px}.bar{height:100%;width:0;background:#b5f8c7;transition:width .2s}button{background:#b5f8c7;color:#163529;border:0;border-radius:10px;padding:12px 20px;font-size:16px;cursor:pointer}#error{display:none;max-width:560px}noscript{position:fixed;inset:0;display:grid;place-content:center;padding:30px}
+</style>
+$GODOT_HEAD_INCLUDE
+</head>
+<body>
+<canvas id="canvas" tabindex="0" aria-label="Guide a melting cube. Select arrows with WASD, click tiles to place them, press Space to run or pause, R to edit and E to erase."></canvas>
+<div id="loading" role="status" aria-live="polite"><div><div class="cube"></div><h1>Be careful! The ice is melting!</h1><p id="loading-text">Loading the ice field…</p><div class="track"><div id="bar" class="bar"></div></div><div id="error"><p id="error-text"></p><button onclick="location.reload()">Reload</button></div></div></div>
+<noscript>Enable JavaScript to play.</noscript>
+<script src="$GODOT_URL"></script>
+<script>
+const engine = new Engine($GODOT_CONFIG);
+const fail = (error) => {document.getElementById('loading-text').textContent='The game could not start';document.getElementById('error').style.display='block';document.getElementById('error-text').textContent='Try a browser with WebGL 2. '+(error?.message || String(error));console.error(error)};
+engine.startGame({canvas:document.getElementById('canvas'),onProgress:(current,total)=>{if(total>0)document.getElementById('bar').style.width=Math.round(current/total*100)+'%'}}).then(()=>{document.getElementById('loading').remove();document.getElementById('canvas').focus()}).catch(fail);
+document.addEventListener('contextmenu',e=>{if(e.target.id==='canvas')e.preventDefault()});
+</script>
+</body>
+</html>

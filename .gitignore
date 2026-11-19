@@ -1,0 +1,9 @@
+.DS_Store
+game/.godot/
+dist/
+artifacts/
+*.zip
+*.log
+.env*
+.sites-local/
+
